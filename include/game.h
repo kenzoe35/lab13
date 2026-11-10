@@ -21,6 +21,12 @@ public:
   /// Placeholder. Derived classes define their own play() this week.
   void play();
 
+  // Virtual destructor so derived classes like arcade can be deleted through a Game pointer.
+  virtual ~Game() = default;
+
+  // Make play() virtual and override it in derived classes.
+  virtual void play() = 0;
+
 protected:
   /// Record the score of a finished game.
   /// @param score the score to remember
