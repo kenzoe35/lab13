@@ -18,9 +18,6 @@ public:
   /// @return the score from the most recent play, or 0 if never played
   int last_score() const;
 
-  /// Placeholder. Derived classes define their own play() this week.
-  void play();
-
   // Virtual destructor so derived classes like arcade can be deleted through a Game pointer.
   virtual ~Game() = default;
 
