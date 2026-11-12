@@ -1,6 +1,7 @@
 #include "arcade.h"
 
 Arcade::Arcade() : m_count(0) {
+	// TODO: Allocate games and initialize m_count to 0
 	for (int i = 0; i < max_games; ++i) {
 		m_games[i] = nullptr;
 	}
