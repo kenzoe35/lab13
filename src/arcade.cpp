@@ -7,6 +7,9 @@ Arcade::Arcade() : m_count(0) {
 }
 Arcade::~Arcade() {
 	// TODO: Delete every game the arcade owns
+	for (int i = 0; i < max_games; ++i) {
+		delete m_games[i];
+	}
 }
 
 void add(Game* game) {
