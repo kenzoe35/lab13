@@ -12,7 +12,7 @@ public:
   Hangman();
 
   /// Play once, record the score, and count the play.
-  void play();
+  void play() override;
 
   /// @return how many times play() has run
   int times_played() const;
