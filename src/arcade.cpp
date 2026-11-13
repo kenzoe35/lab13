@@ -13,11 +13,11 @@ Arcade::~Arcade() {
 	}
 }
 
-void add(Game* game) {
+void Arcade::add(Game *game) {
 	// TODO: Take ownership of game; if full, delete it immediately; otherwise add to m_games and update count
 }
 
 
-void run() {
+void Arcade::run() {
 	// TODO: Show menu, play chosen games, print each score afterwards, and return on 0 or end of input
 }
