@@ -9,7 +9,9 @@
 #include "hangman_game.h"
 #include "input.h"
 #include "minesweeper_game.h"
+#include "arcade.h"
 
+/*
 namespace {
 enum class Choice { hangman, dungeon, blackjack, minesweeper, quit, invalid };
 
@@ -92,4 +94,21 @@ int main() {
   }
   std::cout << "Goodbye.\n";
   return 0;
+}
+*/
+
+int main() {
+    Arcade arcade;
+
+    // Add all your games to the arcade
+    arcade.add(new Hangman());
+    arcade.add(new Dungeon());
+    arcade.add(new Blackjack());
+    arcade.add(new Minesweeper());
+
+    // Run the arcade menu loop
+    arcade.run();
+
+    std::cout << "Goodbye.\n";
+    return 0;
 }
