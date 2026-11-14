@@ -17,7 +17,9 @@ void Monster::take_damage(int amount) {
 	}
 }
 
-bool Monster::is_dead() const {}
+bool Monster::is_dead() const {
+	return m_health <= 0;
+}
 
 const std::string& Monster::name() const {}
 
