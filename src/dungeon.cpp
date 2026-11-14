@@ -8,6 +8,8 @@
 #include "monster.h"
 #include "player.h"
 #include "room.h"
+#include "goblin.h"
+#include "troll.h"
 
 void connect_rooms(Room &a, Direction d, Room &b) {
   a.connect(d, &b);
@@ -144,6 +146,7 @@ int dungeon_score(int items_collected, int health) {
 }
 
 int play_dungeon() {
+  int defeated = 0;
   // Layout:   Hall    - Armory   - Library
   //             |          |          |
   //           Cellar  - Spikes   - Treasury
@@ -171,7 +174,9 @@ int play_dungeon() {
   rooms[1].add_item(Item{"shield", "A dented wooden shield.", 6});
   rooms[2].add_item(Item{"scroll", "A scroll covered in faded writing.", 1});
   rooms[3].add_item(Item{"rope", "Thirty feet of sturdy rope.", 3});
+  rooms[3].set_monster(new Goblin{});
   rooms[5].add_item(Item{"crown", "A small golden crown.", 4});
+  rooms[5].set_monster(new Troll{});
 
   Player player{"Adventurer", &rooms[0]};
 
