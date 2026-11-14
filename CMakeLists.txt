@@ -13,10 +13,17 @@ endif()
 # AddressSanitizer: cmake -S . -B build-asan -DENABLE_ASAN=ON
 option(ENABLE_ASAN "Build with AddressSanitizer" OFF)
 
-add_compile_options(-Wall -Wextra)
-if(ENABLE_ASAN)
-    add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
-    add_link_options(-fsanitize=address)
+if(MSVC)
+    add_compile_options(/W4)
+    if(ENABLE_ASAN)
+        add_compile_options(/fsanitize=address /Zi)
+    endif()
+else()
+    add_compile_options(-Wall -Wextra)
+    if(ENABLE_ASAN)
+        add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
+        add_link_options(-fsanitize=address)
+    endif()
 endif()
 
 add_library(arcade_lib STATIC
@@ -38,10 +45,13 @@ add_library(arcade_lib STATIC
     src/minesweeper_game.cpp
     src/player.cpp
     src/room.cpp
-)
+    src/arcade.cpp 
+    src/monster.cpp
+    src/goblin.cpp 
+    src/troll.cpp)
 target_include_directories(arcade_lib PUBLIC include)
 
-add_executable(arcade app/main.cpp)
+add_executable(arcade app/main.cpp "src/arcade.cpp" "src/monster.cpp" "include/goblin.h" "src/goblin.cpp" "src/troll.cpp")
 target_link_libraries(arcade PRIVATE arcade_lib)
 
 # Tests (GoogleTest)
