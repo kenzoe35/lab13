@@ -58,4 +58,9 @@ void Room::list_items() const {
 
 void Room::set_trap_damage(int damage) { m_trap_damage = damage; }
 
+void Room::set_monster(Monster* monster) {
+	delete m_monster; // Delete the existing monster if there is one
+	m_monster = monster;
+}
+
 int Room::trap_damage() const { return m_trap_damage; }

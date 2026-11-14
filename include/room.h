@@ -5,6 +5,7 @@
 
 #include "direction.h"
 #include "item.h"
+#include "monster.h"
 
 /// @file room.h
 /// @brief A place in the Dungeon.
@@ -60,6 +61,9 @@ public:
   /// @param damage health lost by a player who enters (0 means no trap)
   void set_trap_damage(int damage);
 
+  /// Set a monster in this room.
+  void set_monster(Monster* monster);
+
   /// @return health lost by a player who enters this room
   int trap_damage() const;
 
@@ -70,6 +74,7 @@ private:
   Item m_items[max_room_items];
   int m_item_count;
   int m_trap_damage;
+  Monster* m_monster{ nullptr }; // The monster pointer owned by the room
 };
 
 #endif // ARCADE_ROOM_H
