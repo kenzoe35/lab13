@@ -21,5 +21,7 @@ bool Monster::is_dead() const {
 	return m_health <= 0;
 }
 
-const std::string& Monster::name() const {}
+const std::string& Monster::name() const {
+	return m_name;
+}
 
