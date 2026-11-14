@@ -67,6 +67,9 @@ public:
   /// @return health lost by a player who enters this room
   int trap_damage() const;
 
+  /// @return a pointer to the monster in this room, or nullptr if none
+  Monster* monster() const;
+
 private:
   std::string m_name;
   std::string m_description;
@@ -74,7 +77,7 @@ private:
   Item m_items[max_room_items];
   int m_item_count;
   int m_trap_damage;
-  Monster* m_monster{ nullptr }; // The monster pointer owned by the room
+  Monster *m_monster{ nullptr }; // The monster pointer owned by the room
 };
 
 #endif // ARCADE_ROOM_H

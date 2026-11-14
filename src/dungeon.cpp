@@ -7,6 +7,7 @@
 #include "item.h"
 #include "monster.h"
 #include "player.h"
+#include "room.h"
 
 void connect_rooms(Room &a, Direction d, Room &b) {
   a.connect(d, &b);
@@ -110,15 +111,32 @@ constexpr int monster_bonus = 25;
 /// player.move(opposite(came_by)).
 /// @param defeated incremented when the player wins a fight
 /// @return false if the player died
-[[maybe_unused]] bool meet_monster(Player &player, Direction came_by,
-                                   int &defeated) {
-  // TODO (Lab 13, Task 4): needs Room::monster() from Task 3.
-  (void)player;
-  (void)came_by;
-  (void)defeated;
-  return true;
-}
+[[maybe_unused]] bool meet_monster(Player& player, Direction came_by,
+    int& defeated) {
+    Room* room = player.location();
+    Monster* m = room->monster();
 
+    if (m == nullptr || m->is_dead()) {
+        return true; // No living monster here
+    }
+
+    std::cout << "A monster blocks your way!\n";
+    FightResult result = fight(player, *m);
+
+    if (result == FightResult::won) {
+        ++defeated;
+        room->set_monster(nullptr); // Remove the dead monster from the room
+    }
+    else if (result == FightResult::fled) {
+        std::cout << "You flee back the way you came!\n";
+        player.move(opposite(came_by));
+    }
+    else if (result == FightResult::died) {
+        return false;
+    }
+
+    return player.is_alive();
+}
 } // namespace
 
 int dungeon_score(int items_collected, int health) {
