@@ -70,13 +70,41 @@ constexpr int monster_bonus = 25;
 ///
 /// Use only the Monster interface. There must be no `if` on the kind of
 /// monster.
-[[maybe_unused]] FightResult fight(Player &player, Monster &monster) {
-  // TODO (Lab 13, Task 4)
-  (void)player;
-  (void)monster;
-  return FightResult::fled;
-}
+[[maybe_unused]] FightResult fight(Player& player, Monster& monster) {
+    std::string line;
+    while (!monster.is_dead() && player.is_alive()) {
+        std::cout << "\n" << monster.describe() << " (Health: " << monster.name()
+            << ", Your Health: " << player.health() << ")\n";
+        std::cout << "Attack (a) or Flee (f)? ";
 
+        if (!prompt_line("", line) || line == "f" || line == "flee") {
+            return FightResult::fled;
+        }
+
+        if (line == "a" || line == "attack") {
+            monster.take_damage(player_attack);
+            std::cout << "You attack the " << monster.name() << " for " << player_attack << " damage.\n";
+
+            if (monster.is_dead()) {
+                std::cout << "You defeated the " << monster.name() << "!\n";
+                return FightResult::won;
+            }
+
+            int dmg = monster.attack_damage();
+            player.take_damage(dmg);
+            std::cout << "The " << monster.name() << " hits you back for " << dmg << " damage!\n";
+
+            if (!player.is_alive()) {
+                std::cout << "You have died.\n";
+                return FightResult::died;
+            }
+        }
+        else {
+            std::cout << "Invalid choice. Enter 'a' to attack or 'f' to flee.\n";
+        }
+    }
+    return monster.is_dead() ? FightResult::won : FightResult::died;
+}
 /// Fight the monster in the room the player just entered, if there is a live
 /// one. If the player flees, walk back through the exit they came in by:
 /// player.move(opposite(came_by)).
