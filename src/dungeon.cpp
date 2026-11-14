@@ -212,6 +212,9 @@ int play_dungeon() {
       } else if (!enter_room(player)) {
         return 0;
       }
+       if (!meet_monster(player, d, defeated)) {
+           return 0;
+      }
       // TODO (Lab 13, Task 4): after entering, call meet_monster() and
       // return 0 if the player died. Add monster_bonus * defeated to the
       // score you return.
@@ -235,5 +238,5 @@ int play_dungeon() {
       std::cout << "Unknown command '" << verb << "'. Type help.\n";
     }
   }
-  return dungeon_score(player.inventory_count(), player.health());
+  return dungeon_score(player.inventory_count(), player.health()) + monster_bonus * defeated;
 }
