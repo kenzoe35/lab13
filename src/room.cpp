@@ -63,4 +63,8 @@ void Room::set_monster(Monster* monster) {
 	m_monster = monster;
 }
 
+Monster* Room::monster() const {
+    return m_monster;
+}
+
 int Room::trap_damage() const { return m_trap_damage; }
